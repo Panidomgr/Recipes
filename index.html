@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Συνταγές</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div id="homeButton" class="ubuntu-medium button text">
+            Home
+        </div>
+        <div id="navItems" class="ubuntu-medium">
+            <a class="button text">Συνταγές</a>
+            <a class="button text">Κατηγορίες</a>
+            <a class="button text">Αγαπημένα</a>
+            <div class="button" onclick="document.body.classList.toggle(`dark`);">🌚</div>
+        </div>
+        <div class="button" id="burgerMenu" onclick="document.getElementById(`navItems`).classList.toggle(`shown`);">
+            🍔
+        </div>
+    </nav>
+    <main>
+        <div>
+            <a href="./recipe/koulourakia.html" class="card">
+                <div class="title text ubuntu-medium">Koulourakia</div>
+                <img class="tn" src="https://www.favfamilyrecipes.com/wp-content/uploads/2025/02/Side-view-Nicks-Authentic-Italian-Spaghetti-500x500.jpg"></img>
+                <div class="bottom">
+                    <div class="time text ubuntu-light">15min</div>
+                    <div class="portion text ubuntu-light">4srv</div>
+                </div>
+                <p class="desc text eb-garamond">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </a>
+            <a href="./recipe/pita.html" class="card">
+                <div class="title text ubuntu-medium">Πιτα</div>
+                <img class="tn" src="https://www.favfamilyrecipes.com/wp-content/uploads/2025/02/Side-view-Nicks-Authentic-Italian-Spaghetti-500x500.jpg"></img>
+                <div class="bottom">
+                    <div class="time text ubuntu-light">15min</div>
+                    <div class="portion text ubuntu-light">4srv</div>
+                </div>
+                <p class="desc text eb-garamond">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </a>
+            <div class="card">
+                <div class="title text ubuntu-medium">Spaghetti</div>
+                <img class="tn" src="https://www.favfamilyrecipes.com/wp-content/uploads/2025/02/Side-view-Nicks-Authentic-Italian-Spaghetti-500x500.jpg"></img>
+                <div class="bottom">
+                    <div class="time text ubuntu-light">15min</div>
+                    <div class="portion text ubuntu-light">4srv</div>
+                </div>
+                <p class="desc text eb-garamond">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+            <div class="card">
+                <div class="title text ubuntu-medium">Spaghetti</div>
+                <img class="tn" src="https://www.favfamilyrecipes.com/wp-content/uploads/2025/02/Side-view-Nicks-Authentic-Italian-Spaghetti-500x500.jpg"></img>
+                <div class="bottom">
+                    <div class="time text ubuntu-light">15min</div>
+                    <div class="portion text ubuntu-light">4srv</div>
+                </div>
+                <p class="desc text eb-garamond">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+            <div class="card">
+                <div class="title text ubuntu-medium">Spaghetti</div>
+                <img class="tn" src="https://www.favfamilyrecipes.com/wp-content/uploads/2025/02/Side-view-Nicks-Authentic-Italian-Spaghetti-500x500.jpg"></img>
+                <div class="bottom">
+                    <div class="time text ubuntu-light">15min</div>
+                    <div class="portion text ubuntu-light">4srv</div>
+                </div>
+                <p class="desc text eb-garamond">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

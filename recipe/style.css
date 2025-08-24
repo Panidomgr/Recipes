@@ -1,0 +1,416 @@
+    /*  Variables   */
+
+:root {
+  --bg: #FAF3E0;
+  --text: #2C2C2C;
+  --accent: #C97A40;
+  --highlight: #A63C24;
+  --hover: #E6B89C;
+}
+
+body.dark {
+  --bg: #2B2B28;
+  --text: #EAE6DA;
+  --accent: #5C4033;
+  --highlight: #9b5e41;
+  --hover: #B97A57;
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+
+body {
+    background-color: var(--bg);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+nav {
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: var(--accent);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    min-height: 35px;
+    transition: background-color 0.4s ease;
+    min-height: 70px;
+    flex-wrap: wrap;
+}
+
+#navItems {
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+}
+
+
+
+    /*  Text    */
+
+.button {
+    padding: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover {
+    border: 2px dashed var(--hover);
+    border-radius: 10px;
+    background-color: var(--highlight);
+    transition: all 0.2s ease;
+}
+
+.text {
+    font-size: 1.5em;
+    color: var(--text);
+    transition: color 0.4s ease;
+}
+
+
+    /*  Fonts   */
+
+.ubuntu-light {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.ubuntu-regular {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.ubuntu-medium {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.ubuntu-bold {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.ubuntu-light-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.ubuntu-regular-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.ubuntu-medium-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.ubuntu-bold-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.eb-garamond {
+  font-family: "EB Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: lighter;
+  font-style: normal;
+}
+
+
+    /*  Responsive Design   */
+
+#burgerMenu {
+    display: none;
+}
+
+@media (max-width: 600px) {       
+    #navItems {
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        top: 55px;
+        padding: 10px;
+        background-color: var(--accent);
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+        border-bottom-left-radius: 10px;
+
+        /* animation setup */
+        transform: translateY(-20px);
+        overflow: hidden;
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    #burgerMenu {
+        display: block;
+    }
+
+    nav {
+        border-bottom-right-radius: 0;
+    }
+
+    #navItems.shown {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+    /*  Recipe Styling  */
+
+main {
+    margin: 5px;
+    padding: 5px;
+}
+
+.recipeBackButton {
+    justify-self: flex-start;
+    padding: 5px;
+    flex: 0 0 auto;
+    font-size: 1.8em;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.recipeBackButton:hover > div {
+    transform: translateX(-10px) scale(1.1);
+    transition: all 0.4s ease-in;
+}
+
+.recipeBackIcon::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f0a5";
+    font-weight: 900;
+    display: inline-block;
+    color: var(--text);
+}
+
+/*
+.recipeContainer
+*/
+
+.recipeTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.recipeTopCenter {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    gap: 30px;
+    flex: 1;
+    flex-wrap: wrap-reverse;
+}
+
+.recipeFavouriteButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8em;
+    cursor: pointer;
+}
+
+.recipeFavouriteButton:hover {
+    transform: translateY(-5px) scale(1.2);
+    transition: all 0.1s ease-in;
+}
+
+.recipeFaveIcon::before {
+    font-family: "Font Awesome 6 Free";
+    content: "\f004";
+    font-weight: 400;
+    display: inline-block;
+    transform: scale(1);
+    transition: transform 0.3s ease, color 0.3s ease;
+    color: var(--text);
+}
+
+.recipeFavouriteButton.active .recipeFaveIcon::before {
+    font-weight: 900;
+    color: var(--highlight);
+    transform: scale(1.2);
+}
+
+
+.recipeTitle {
+    word-break: break-all;
+    min-width: 150px;
+}
+
+.recipeMiddleA {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+    gap: 20px;
+}
+
+.recipeInfo {
+    border: 2px dashed var(--text);
+    max-width: 50%;
+    background-color: var(--hover);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.recipeImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 45%;
+    min-width: 200px;
+}
+
+.recipeImage img {
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 2px solid var(--text);
+}
+
+@media (max-width: 500px) {
+    .recipeInfo {
+        max-width: 95%;
+    }
+
+    .recipeImage {
+        max-width: 95%;
+    }
+
+    .recipeMiddleA {
+        margin-top: 20px;
+    }
+}
+
+.recipeInfoBottom {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+
+.recipeDescription {
+    background-color: var(--accent);
+    padding: 10px;
+    border-radius: 10px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+/*
+.recipeTime
+.recipeServings
+.recipePrice
+*/
+
+
+.recipeMiddleB {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 50px;
+
+}
+
+.zoomable {
+    cursor: zoom-in;
+    transition: border 0.3s ease, transform 0.3s ease;
+}
+
+.zoomable:hover {
+    border: 3px dashed var(--text);
+    transform: scale(1.02);
+}
+
+#overlay {
+  display: none; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+#overlay-img {
+  max-width: 90%;
+  max-height: 90%;
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  border-radius: 10px;
+  animation: zoomIn 0.3s ease forwards;
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from { background: rgba(0,0,0,0); }
+  to   { background: rgba(0,0,0,0.7); }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+
+
+/*
+.recipeIngredients
+.recipePortionAdjuster
+*/
+
+
+
+.recipeIngredientsList li {
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.crossed {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    color: var(--highlight);
+    opacity: 0.7;
+}
+
+
+/*
+.recipeSteps
+
+
+
+.recipeBottom
+.recipeNotes
+.recipePrintButton*/

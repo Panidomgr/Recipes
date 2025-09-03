@@ -1,0 +1,485 @@
+    /*  Variables   */
+
+    :root {
+        --bg: #FAF3E0;
+        --text: #2C2C2C;
+        --accent: #C97A40;
+        --highlight: #A63C24;
+        --hover: #E6B89C;
+    }
+
+    body.dark {
+        --bg: #2B2B28;
+        --text: #EAE6DA;
+        --accent: #5C4033;
+        --highlight: #9b5e41;
+        --hover: #B97A57;
+    }
+
+
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+
+    body {
+        background-color: var(--bg);
+        transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+
+    /*  Text    */
+
+    .button {
+        padding: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .button:hover {
+        border: 2px dashed var(--hover);
+        border-radius: 10px;
+        background-color: var(--highlight);
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .text {
+        font-size: 1.25em;
+        color: var(--text);
+        transition: color 0.4s ease;
+    }
+
+    .mid-text {
+        font-size: 1.5em;
+        color: var(--text);
+        transition: color 0.4s ease;
+    }
+
+    .big-text {
+        font-size: 2em;
+        color: var(--text);
+        transition: color 0.4s ease;
+    }
+
+    .huge-text {
+        font-size: 3em;
+        color: var(--text);
+        transition: color 0.4s ease;
+    }
+
+
+    /*  Fonts   */
+
+    .ubuntu-light {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 300;
+        font-style: normal;
+    }
+
+    .ubuntu-regular {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .ubuntu-medium {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+    }
+
+    .ubuntu-bold {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 700;
+        font-style: normal;
+    }
+
+    .ubuntu-light-italic {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 300;
+        font-style: italic;
+    }
+
+    .ubuntu-regular-italic {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 400;
+        font-style: italic;
+    }
+
+    .ubuntu-medium-italic {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 500;
+        font-style: italic;
+    }
+
+    .ubuntu-bold-italic {
+        font-family: "Ubuntu", sans-serif;
+        font-weight: 700;
+        font-style: italic;
+    }
+
+    .eb-garamond {
+        font-family: "EB Garamond", serif;
+        font-optical-sizing: auto;
+        font-weight: lighter;
+        font-style: normal;
+    }
+
+    /*  ss Styling  */
+
+    main {
+        padding: 5px;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #ssBackButton {
+        justify-self: flex-start;
+        padding: 5px;
+        flex: 0 0 auto;
+        font-size: 1.8em;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    #ssBackButton:hover>div {
+        transform: translateX(-10px) scale(1.1);
+        transition: all 0.4s ease-in;
+    }
+
+    #ssBackIcon::before {
+        font-family: "Font Awesome 6 Free";
+        content: "\f0a5";
+        font-weight: 900;
+        display: inline-block;
+        color: var(--text);
+    }
+
+    #ssTop {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        padding: 10px;
+        gap: 20px;
+        position: absolute;
+        top: 50px;
+        width: 85%;
+    }
+
+    #ssTopCenter {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        gap: 30px;
+        flex: 1;
+    }
+
+    #ssTitle {
+        word-break: break-all;
+        min-width: 150px;
+    }
+
+    #ssMiddleA {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        width: 100vw;
+        top: 0;
+    }
+
+    #ssContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    #ssMiddleAContent {
+        display: flex;
+        align-self: center;
+        justify-content: space-evenly;
+        border-bottom: 5px dotted var(--text);
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        background-color: var(--accent);
+        padding: 0 20px;
+        /* hide vertical padding when closed */
+        border-bottom-left-radius: 50px;
+        border-bottom-right-radius: 50px;
+        transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+    }
+
+    #ssMiddleAContent.shown {
+        max-height: 80vh;
+        /* big enough to fit content */
+        opacity: 1;
+        padding: 10px 20px;
+        width: 100vw;
+    }
+
+
+    #ssShowTopInfoButton {
+        border: 2px dotted var(--text);
+        aspect-ratio: 1 / 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 2.5em;
+        color: var(--text);
+        border-radius: 10px;
+        transition: all 0.4s ease;
+        max-width: 50px;
+        margin-right: 50px;
+    }
+
+    #ssShowTopInfoButton.rotated {
+        transform: rotate(180deg);
+        background-color: var(--accent);
+    }
+
+    #ssInfo {
+        border: 5px solid var(--text);
+        max-width: 500px;
+        background-color: var(--hover);
+        border-radius: 10px;
+        overflow: hidden;
+        min-height: 100px;
+    }
+
+    #ssImage {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        width: 20%;
+    }
+
+    #ssImage.shown {
+        display: flex;
+    }
+
+    #ssImage img {
+        max-width: 100%;
+        max-height: 30vh;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 15px;
+        border: 2px solid var(--text);
+    }
+
+    #ssInfoBottom {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 5px;
+        gap: 10px;
+    }
+
+
+    #ssInfoTop {
+        background-color: var(--accent);
+        padding: 10px;
+        border-bottom: 5px dashed var(--text);
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+        height: 70%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        overflow-y: auto;
+        text-wrap: wrap;
+        word-break: break-all;
+    }
+
+    #ssPortionInput {
+        max-width: 40px;
+        font-size: 1em;
+        text-align: center;
+        max-height: 30px;
+    }
+
+    #ssServingsDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 1px dashed var(--text);
+        border-radius: 10px;
+        padding: 3px;
+    }
+
+    #ssTime {
+        border: 1px dashed var(--text);
+        border-radius: 10px;
+        padding: 3px;
+    }
+
+    #ssPrice {
+        border: 1px dashed var(--text);
+        border-radius: 10px;
+        padding: 3px;
+    }
+
+
+    #ssMiddleB {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    #ssMiddleC {
+        display: flex;
+        width: 90vw;
+        border: 10px dashed var(--text);
+        border-radius: 20px;
+        height: 50vh;
+        background-color: var(--hover);
+        align-items: center;
+        justify-content: space-evenly;
+        padding: 20px;
+        gap: 30px;
+    }
+
+    #ssStepButtons {
+        display: flex;
+        width: 90%;
+        margin-bottom: 15px;
+        position: absolute;
+        bottom: 0;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #ssStep {
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
+
+    #ssIngredients {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+
+    #ssSystemToggle {
+        background-color: var(--accent);
+        width: auto;
+        height: auto;
+        border: 2px solid var(--text);
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px;
+        gap: 20px;
+        border-radius: 15px;
+    }
+
+    .ssSystem {
+        width: auto;
+        height: auto;
+        text-align: center;
+        padding: 5px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    .ssSystem.active {
+        background-color: var(--hover);
+        border: 1px solid var(--text);
+    }
+
+    #ssIngredientsList li {
+        transition: opacity 0.2s ease, color 0.2s ease;
+    }
+
+    .crossed {
+        text-decoration: line-through;
+        text-decoration-thickness: 2px;
+        color: var(--text);
+        opacity: 0.7;
+    }
+
+    #ssNotes {
+        min-width: 300px;
+        min-height: 300px;
+        max-height: 400px;
+        max-width: 400px;
+        background-color: var(--hover);
+        padding: 10px;
+        border-radius: 15px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .zoomable {
+        cursor: zoom-in;
+        transition: border 0.3s ease, transform 0.3s ease;
+    }
+
+    .zoomable:hover {
+        border: 3px dashed var(--text);
+        transform: scale(1.02);
+    }
+
+    #overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        animation: fadeIn 0.3s ease;
+    }
+
+    #overlay-img {
+        max-width: 90%;
+        max-height: 90%;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        animation: zoomIn 0.3s ease forwards;
+    }
+
+    /* Keyframes */
+    @keyframes fadeIn {
+        from {
+            background: rgba(0, 0, 0, 0);
+        }
+
+        to {
+            background: rgba(0, 0, 0, 0.7);
+        }
+    }
+
+    @keyframes zoomIn {
+        from {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }

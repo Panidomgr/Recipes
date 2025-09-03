@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Συνταγές</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="navStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <script defer type="module">
+        // Importing the recipes database
+        import { recipes } from "./recipes.js";
+
+        // Get all IDs
+        const allIds = recipes.map(r => r.id);
+
+        // Filter out the "error"
+        const validIds = allIds.filter(id => id !== "error");
+
+        // Pick a random one
+        const randomId = validIds[Math.floor(Math.random() * validIds.length)];
+
+        const rng = document.getElementById("rng");
+        rng.href = "./recipe.html?id=" + randomId;
+    </script>
+</head>
+
+<body>
+    <nav>
+        <a href="./index.html" id="homeButton" class="ubuntu-medium button text">Home</a>
+        <div class="button" onclick="document.body.classList.toggle(`dark`);" style="font-size: 1.8em;">🌚</div>
+    </nav>
+    <main>
+        <div id="homeContainer">
+            <a id="rng" class="homeCard text" href="">Random Recipe</a>
+            <a href="recipes.html" class="homeCard text">All the Recipes</a>
+        </div>
+    </main>
+</body>
+
+</html>

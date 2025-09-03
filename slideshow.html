@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="slideshowStyle.css">
+    <link rel="stylesheet" href="navStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script defer type="module" src="slideshowScript.js"></script>
+</head>
+
+<body>
+    <main class="text">
+        <div id="ssContainer">
+            <div id="ssTop" class="big-text">
+                <div class="no-print" id="ssBackButton" onclick="window.history.back();">
+                    <div>
+                        <span id="ssBackIcon"></span>
+                    </div>
+                </div>
+                <div id="ssTopCenter">
+                    <div class="ubuntu-bold" id="ssTitle">
+                        <h1>TEMP</h1>
+                    </div>
+                </div>
+                <div class="button" onclick="document.body.classList.toggle(`dark`);" style="font-size: 1.8em;">🌚</div>
+            </div>
+            <div class="eb-garamond" id="ssMiddleA">
+                <div id="ssMiddleAContent" class="mid-text">
+                    <div id="ssIngredientsList">
+                        <ul>
+                            <li>TEMP</li>
+                            <li>TEMP</li>
+                        </ul>
+                    </div>
+                    <div id="ssSystemToggle" class="no-print">
+                        <div id="ssUS" class="ssSystem active">US</div>
+                        <div id="ssMe" class="ssSystem">Metric</div>
+                    </div>
+                    <div id="ssInfo">
+                        <div id="ssInfoTop">
+                            <p id="ssDescription">TEMPTEMP TEMP TEMP TEMP TEMP TEMP TEMP TEMP TEMP TEMP TEMP TEMP TEMP
+                            </p>
+                        </div>
+                        <div id="ssInfoBottom">
+                            <div id="ssTime">TEMP </div>
+                            <div id="ssServingsDiv">
+                                <div>
+                                    <input id="ssPortionInput" type="number" min="1" max="12"></input>
+                                    <label for="ssPortionInput"> Δόση</label>
+                                </div>
+                                <div id="ssServings">TEMP </div>
+                            </div>
+                            <div id="ssPrice">TEMP </div>
+                        </div>
+                    </div>
+                    <textarea id="ssNotes" placeholder="Write your notes here..." class="text"></textarea>
+                </div>
+                <div id="ssShowTopInfoButton" class="button ubuntu-bold"
+                    onclick="document.getElementById(`ssMiddleAContent`).classList.toggle(`shown`); this.classList.toggle('rotated');">
+                    V</div>
+            </div>
+            <div class="eb-garamond" id="ssMiddleB">
+                <div id="ssMiddleC">
+                    <div id="ssStep" class="huge-text">
+                        TEMP TEMP TMEP TMEP
+                    </div>
+                    <div id="ssImage">
+                        <img class="zoomable"
+                            src="https://img.freepik.com/premium-vector/chef-hat-logo-illustration_746614-100.jpg"
+                            alt="ssImage">
+                    </div>
+                </div>
+                <div id="ssStepButtons">
+                    <div id="ssStepPrevious" style="font-size: 5em;">PREV</div>
+                    <div id="ssStepNext" style="font-size: 5em;">NEXT</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="overlay">
+        <img id="overlay-img" src="" alt="Zoomed Image" style="aspect-ratio: 1/1;">
+    </div>
+</body>
+
+</html>

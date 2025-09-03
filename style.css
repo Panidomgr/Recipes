@@ -1,0 +1,312 @@
+    /*  Variables   */
+
+:root {
+  --bg: #FAF3E0;
+  --text: #2C2C2C;
+  --accent: #C97A40;
+  --highlight: #A63C24;
+  --hover: #E6B89C;
+}
+
+body.dark {
+  --bg: #2B2B28;
+  --text: #EAE6DA;
+  --accent: #5C4033;
+  --highlight: #9b5e41;
+  --hover: #B97A57;
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background-color: var(--bg);
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+
+    /*  Text    */
+
+.button {
+    padding: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.button:hover {
+    border: 2px dashed var(--hover);
+    border-radius: 10px;
+    background-color: var(--highlight);
+    transition: all 0.2s ease;
+}
+
+.text {
+    font-size: 1.5em;
+    color: var(--text);
+    transition: color 0.4s ease;
+}
+
+
+    /*  Fonts   */
+
+.ubuntu-light {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.ubuntu-regular {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.ubuntu-medium {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.ubuntu-bold {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.ubuntu-light-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.ubuntu-regular-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.ubuntu-medium-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.ubuntu-bold-italic {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.eb-garamond {
+  font-family: "EB Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: lighter;
+  font-style: normal;
+}
+
+
+
+    /*  Cards   */
+
+.card {
+    border: 1px solid var(--highlight);
+    border-radius: 15px;
+    background-color: var(--accent);
+    box-sizing: border-box;
+    height: 100%;
+    max-height: 345px;
+    max-width: 250px;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    max-height: 100%;
+}
+
+.tn {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px 10px;
+    border: 1px solid var(--text);
+}
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.desc {
+    max-height: 0;
+    opacity: 0;
+    padding: 0 10px;
+    transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
+.card:hover .desc {
+    max-height: 100%;
+    opacity: 1;
+    padding: 10px;
+}
+
+
+
+/* Home */
+
+#homeContainer {
+  border: 5px dashed var(--text);
+  background-color: var(--hover);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 30px;
+  gap: 50px;
+  border-radius: 15px;
+}
+
+.homeCard {
+  border: 2px dotted var(--text);
+  background-color: var(--accent);
+  height: 150px;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 15px;
+  cursor: pointer;
+  aspect-ratio: 1 / 1;
+  box-shadow: 0px 10px 25px black;
+  border-radius: 15px;
+}
+
+.homeCard:hover {
+  transform: translateY(-15px);
+  border: 5px solid var(--text);
+  font-size: 2em;
+  text-wrap: wrap;
+  transition: all 0.4s ease;
+}
+
+
+
+/* Recipes */
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    flex-direction: column;
+}
+
+#recipesContainer {
+    height: 100%;
+    width: 100%;
+    margin: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
+}
+
+#advSearchButton {
+  border: 2px dotted var(--text);
+  height: 50px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 2.5em;
+  color: var(--text);
+  border-radius: 10px;
+  transition: all 0.75s ease;
+}
+
+#advSearchButton.rotated {
+  transform: rotate(180deg);
+  background-color: var(--accent);
+}
+
+#top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+  min-height: 50px;
+  padding: 10px;
+  gap: 20px;
+}
+
+#top > input {
+    height: 1.5em;
+    width: 50%;
+}
+
+#advSearch {
+  display: none;
+}
+
+#advSearch.shown {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+#search {
+  border: 2px dotted var(--text);
+  border-radius: 15px;
+  background-color: var(--hover);
+}
+
+#cats, #ings {
+  display: none;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+}
+
+#cats.shown, #ings.shown {
+  display: block;
+  max-height: 200px;           /* adjust to taste */
+  overflow-y: auto;
+}
+
+#cats li, #ings li {
+  max-width: 150px;
+}
+
+#cats li.selected, #ings li.selected, #advFav.selected, #advCat > div.selected, #advIng > div.selected {
+  background-color: var(--highlight);
+  color: var(--bg);
+  border: 1px solid var(--text);
+  border-radius: 10px;
+}
+    
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.5rem;
+}

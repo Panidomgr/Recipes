@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Όλες οι Συνταγές</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script defer type="module" src="script.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="./index.html" class="ubuntu-medium text"><i class="fa-solid fa-arrow-left"></i> Αρχική</a>
+        </div>
+        <button id="themeToggle" class="theme-toggle">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+    </nav>
+
+    <main>
+        <div id="search">
+            <div id="searchTop">
+                <input type="text" placeholder="Αναζήτηση συνταγής...">
+                <button id="advToggle"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+            
+            <div id="filterMenu" class="hidden">
+                <div class="filter-col">
+                    <div class="filter-header ubuntu-medium">Κατηγορίες</div>
+                    <div id="tagsList" class="filter-list text"></div>
+                </div>
+
+                <div class="filter-center">
+                    <label class="ubuntu-medium text" style="cursor: pointer;">
+                        <input type="checkbox" id="favFilter"> 
+                        <span style="margin-left:5px;">Αγαπημένα</span> <i class="fa-solid fa-heart" style="color:var(--highlight);"></i>
+                    </label>
+                </div>
+
+                <div class="filter-col">
+                    <div class="filter-header ubuntu-medium">Υλικά</div>
+                    <div id="ingFilterList" class="filter-list text"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="recipesContainer"></div>
+    </main>
+</body>
+</html>

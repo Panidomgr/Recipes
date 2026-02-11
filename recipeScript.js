@@ -19,7 +19,7 @@ themeToggle.addEventListener('click', () => {
 });
 
 // --- Populate Basic Info ---
-const logoURL = 'https://res.cloudinary.com/dhon1edrf/image/upload/v1767978226/chefLogo_aek6mg.png';
+const logoURL = 'https://res.cloudinary.com/dhon1edrf/image/upload/f_auto,q_auto/v1767978226/chefLogo_aek6mg.png';
 
 document.title = recipe.title;
 document.getElementById('recipeTitle').textContent = recipe.title;

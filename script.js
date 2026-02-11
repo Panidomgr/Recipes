@@ -110,7 +110,7 @@ themeToggle.addEventListener('click', () => {
 });
 
 // --- Data Preparation ---
-const logoURL = 'https://res.cloudinary.com/dhon1edrf/image/upload/v1767978226/chefLogo_aek6mg.png';
+const logoURL = 'https://res.cloudinary.com/dhon1edrf/image/upload/f_auto,q_auto/v1767978226/chefLogo_aek6mg.png';
 
 const container = document.getElementById('recipesContainer');
 const searchInput = document.querySelector('#search input');
@@ -121,7 +121,7 @@ const filterMenu = document.getElementById('filterMenu');
 const allRecipes = [
     ...originalRecipes.map(r => ({ ...r, isInternal: true })),
     ...externalRecipes.map(r => ({ ...r, isInternal: false })) // FIX: Removed "ingredients: []" so we don't erase them
-];
+].sort((a, b) => a.title.localeCompare(b.title, 'el', { sensitivity: 'base' }));
 
 // --- Filter Menu Population ---
 

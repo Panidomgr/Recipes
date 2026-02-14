@@ -1,6 +1,7 @@
 /* =========================================
    DEBUGGING TOOL: VALIDATOR
    Checks for missing IDs AND Unused Ingredients
+   (Includes Hidden Ingredients)
    ========================================= */
 
 /*
@@ -17,8 +18,9 @@ const usedIngredientIds = new Set();
 const missingLog = [];
 const unusedLog = [];
 
-// --- CHECK ORIGINAL RECIPES (Ingredients are objects {id: "..."}) ---
+// --- CHECK ORIGINAL RECIPES ---
 originalRecipes.forEach(recipe => {
+    // A. Check Visible Ingredients
     if (recipe.ingredients) {
         recipe.ingredients.forEach(ing => {
             if (!validIngredientIds.has(ing.id)) {
@@ -26,16 +28,32 @@ originalRecipes.forEach(recipe => {
                     'Type': 'Original',
                     'Recipe': recipe.title,
                     'Missing ID': ing.id,
-                    'Context': ing.label || 'N/A'
+                    'Context': ing.for || 'Visible Ingredient'
                 });
             } else {
                 usedIngredientIds.add(ing.id);
             }
         });
     }
+
+    // B. Check Hidden Ingredients (NEW LOGIC)
+    if (recipe.hiddenIngredients && Array.isArray(recipe.hiddenIngredients)) {
+        recipe.hiddenIngredients.forEach(hiddenId => {
+            if (!validIngredientIds.has(hiddenId)) {
+                missingLog.push({
+                    'Type': 'Original (Hidden)',
+                    'Recipe': recipe.title,
+                    'Missing ID': hiddenId,
+                    'Context': 'Hidden Ingredients List'
+                });
+            } else {
+                usedIngredientIds.add(hiddenId);
+            }
+        });
+    }
 });
 
-// --- CHECK EXTERNAL RECIPES (Ingredients are strings ["..."]) ---
+// --- CHECK EXTERNAL RECIPES ---
 externalRecipes.forEach(recipe => {
     if (recipe.ingredients && Array.isArray(recipe.ingredients)) {
         recipe.ingredients.forEach(ingId => {
@@ -178,34 +196,45 @@ function displayRecipes(filterText = "") {
     const selectedTags = Array.from(tagsListEl.querySelectorAll('input:checked')).map(cb => cb.value);
     const selectedIngs = Array.from(ingListEl.querySelectorAll('input:checked')).map(cb => cb.value);
     const showFavsOnly = document.getElementById('favFilter').checked;
-    const favs = JSON.parse(localStorage.getItem('favRecipes')) || [];
+
+    // Get Favorites from LocalStorage
+    let favs = JSON.parse(localStorage.getItem('favRecipes')) || [];
 
     const filtered = allRecipes.filter(r => {
+        const rId = r.id;
+
         // 1. Text Search
         const titleNorm = r.title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
         if (!titleNorm.includes(term)) return false;
 
         // 2. Favorites Filter
-        if (showFavsOnly && !favs.includes(r.id)) return false;
+        if (showFavsOnly && !favs.includes(rId)) return false;
 
-        // 3. Tags Filter (AND logic: must have ALL selected tags)
+        // 3. Tags Filter
         if (selectedTags.length > 0) {
             if (!r.tags) return false;
             const hasAllTags = selectedTags.every(tag => r.tags.includes(tag));
             if (!hasAllTags) return false;
         }
 
-        // 4. Ingredients Filter (AND logic)
+        // 4. Ingredients Filter (UPDATED)
         if (selectedIngs.length > 0) {
-            let recipeIngIds;
-            
-            // FIX: Handle both object array (internal) and string array (external)
+            let recipeIngIds = [];
+
             if (r.isInternal) {
-                recipeIngIds = r.ingredients.map(i => i.id);
+                // Για internal συνταγές:
+                // 1. Παίρνουμε τα IDs από τα κανονικά ingredients
+                const visibleIds = r.ingredients.map(i => i.id);
+                // 2. Παίρνουμε τα IDs από τα hiddenIngredients (αν υπάρχουν)
+                const hiddenIds = r.hiddenIngredients || [];
+                // 3. Τα ενώνουμε
+                recipeIngIds = [...visibleIds, ...hiddenIds];
             } else {
+                // Για external συνταγές είναι ήδη απλό array με IDs
                 recipeIngIds = r.ingredients || [];
             }
-            
+
+            // Έλεγχος: Πρέπει η συνταγή να έχει ΟΛΑ τα επιλεγμένα φίλτρα
             const hasAllIngs = selectedIngs.every(id => recipeIngIds.includes(id));
             if (!hasAllIngs) return false;
         }
@@ -219,56 +248,84 @@ function displayRecipes(filterText = "") {
     }
 
     filtered.forEach(r => {
-        // Create Card
-        const card = document.createElement('a');
+        const rId = r.id;
+        const isFav = favs.includes(rId);
+
+        // Create Card Container
+        const card = document.createElement('div'); // Changed from <a> to <div> to manage click events better
         card.className = 'card';
 
-        if (r.isInternal) {
-            card.href = `./recipe.html?id=${r.id}`;
-        } else {
-            card.href = r.link;
-            card.target = "_blank";
-        }
+        // Make the whole card clickable (except the heart)
+        card.onclick = (e) => {
+            // Prevent redirect if clicking the heart
+            if (e.target.closest('.fav-btn-card')) return;
 
+            if (r.isInternal) {
+                window.location.href = `./recipe.html?id=${r.id}`;
+            } else {
+                window.open(r.link, '_blank');
+            }
+        };
+
+        // --- IMAGE ---
         const img = document.createElement('img');
         img.className = 'card-img';
         img.src = r.picture || logoURL;
 
+        // --- CONTENT ---
         const content = document.createElement('div');
         content.className = 'card-content';
 
         const titleDiv = document.createElement('div');
         titleDiv.className = 'card-title ubuntu-medium';
 
-        const title = document.createElement(`div`);
-        title.textContent = r.title;
-        titleDiv.appendChild(title);
+        const titleText = document.createElement('div');
+        titleText.textContent = r.title;
+        titleDiv.appendChild(titleText);
 
+        // External Icon (if applicable)
         if (!r.isInternal) {
             const icon = document.createElement('i');
             icon.className = `ext-icon fa-brands`;
-
-            if (r.type === 'youtube') {
-                icon.classList.add('fa-youtube', 'youtube');
-            } else if (r.type === 'facebook') {
-                icon.classList.add('fa-facebook', 'facebook');
-            } else {
-                icon.className = `ext-icon fa-solid fa-arrow-up-right-from-square generic`;
-            }
+            if (r.type === 'youtube') icon.classList.add('fa-youtube', 'youtube');
+            else if (r.type === 'facebook') icon.classList.add('fa-facebook', 'facebook');
+            else icon.className = `ext-icon fa-solid fa-arrow-up-right-from-square generic`;
             titleDiv.appendChild(icon);
         }
-
         content.appendChild(titleDiv);
 
-        if (r.isInternal) {
-            const meta = document.createElement('div');
-            meta.className = 'card-meta ubuntu-light';
-            meta.innerHTML = `<span><i class="fa-regular fa-clock"></i> ${r.time}</span><span><i class="fa-solid fa-utensils"></i> ${r.servings}</span>`;
-            content.appendChild(meta);
-        }
+        // --- FAVORITE BUTTON (NEW) ---
+        const favBtn = document.createElement('div');
+        favBtn.className = `fav-btn-card ${isFav ? 'active' : ''}`;
+        favBtn.innerHTML = `<i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>`;
+
+        favBtn.onclick = (e) => {
+            e.stopPropagation(); // Stop card click
+
+            // Reload favs to ensure sync
+            let currentFavs = JSON.parse(localStorage.getItem('favRecipes')) || [];
+
+            if (currentFavs.includes(rId)) {
+                currentFavs = currentFavs.filter(id => id !== rId);
+                favBtn.classList.remove('active');
+                favBtn.querySelector('i').classList.replace('fa-solid', 'fa-regular');
+            } else {
+                currentFavs.push(rId);
+                favBtn.classList.add('active');
+                favBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid');
+            }
+
+            localStorage.setItem('favRecipes', JSON.stringify(currentFavs));
+
+            // Optional: If we are in "Favorites Only" mode, refresh the list immediately
+            if (document.getElementById('favFilter').checked) {
+                displayRecipes(searchInput.value);
+            }
+        };
 
         card.appendChild(img);
         card.appendChild(content);
+        card.appendChild(favBtn); // Add heart to card
         container.appendChild(card);
     });
 }

@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="el">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Συνταγές της Μαμάς</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dhon1edrf/image/upload/f_auto,q_auto/v1767978226/chefLogo_aek6mg.png">
+    <link rel="icon" type="image/x-icon"
+        href="https://res.cloudinary.com/dhon1edrf/image/upload/f_auto,q_auto/v1767978226/chefLogo_aek6mg.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script type="module">
         import { originalRecipes, externalRecipes } from "./database.js";
-        
+
         // Setup Theme
         const themeToggle = document.getElementById('themeToggle');
         const currentTheme = localStorage.getItem('theme');
         if (currentTheme === 'dark') document.body.classList.add('dark');
-        
+
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark');
             localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
@@ -24,11 +26,11 @@
         // Setup Random Recipe
         const rngBtn = document.getElementById('rngBtn');
         const allRecipes = [...originalRecipes, ...externalRecipes];
-        
+
         rngBtn.addEventListener('click', (e) => {
             e.preventDefault();
             const random = allRecipes[Math.floor(Math.random() * allRecipes.length)];
-            
+
             if (originalRecipes.find(r => r.id === random.id)) {
                 // Internal
                 window.location.href = `./recipe.html?id=${random.id}`;
@@ -39,10 +41,12 @@
         });
     </script>
 </head>
+
 <body id="homePageBody">
     <nav>
         <div id="nav-left">
-            <img src="https://res.cloudinary.com/dhon1edrf/image/upload/f_auto,q_auto/v1767978226/chefLogo_aek6mg.png" alt="Logo" id="navLogo" onerror="this.style.display='none'"> 
+            <img src="https://res.cloudinary.com/dhon1edrf/image/upload/f_auto,q_auto/v1767978226/chefLogo_aek6mg.png"
+                alt="Logo" id="navLogo" onerror="this.style.display='none'">
             <span class="ubuntu-bold text">Συνταγές</span>
         </div>
         <button id="themeToggle" class="theme-toggle">
@@ -60,7 +64,7 @@
                 <i class="fa-solid fa-dice"></i>
                 <span class="ubuntu-medium">Τυχαία Συνταγή</span>
             </a>
-            
+
             <a href="./recipes.html" class="action-card text">
                 <i class="fa-solid fa-book-open"></i>
                 <span class="ubuntu-medium">Όλες οι Συνταγές</span>
@@ -68,5 +72,5 @@
         </div>
     </main>
 </body>
-</html>
 
+</html>

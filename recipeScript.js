@@ -1,4 +1,4 @@
-import { originalRecipes, ingredients as ingDB } from "./database.js";
+import { originalRecipes } from "./database.js";
 
 // --- URL Params & Init ---
 const params = new URLSearchParams(window.location.search);
@@ -24,8 +24,6 @@ const logoURL = 'https://res.cloudinary.com/dhon1edrf/image/upload/f_auto,q_auto
 document.title = recipe.title;
 document.getElementById('recipeTitle').textContent = recipe.title;
 document.getElementById('recipeDesc').textContent = recipe.description;
-document.getElementById('rTime').textContent = recipe.time;
-document.getElementById('rServings').textContent = recipe.servings + " " + (recipe.servingsName || "μερίδες");
 document.getElementById('recipeImg').src = recipe.picture || logoURL;
 
 // --- Favorites Logic ---
@@ -63,61 +61,44 @@ notesArea.addEventListener('input', () => {
     localStorage.setItem(`note-${id}`, notesArea.value);
 });
 
-// --- Ingredients Render Logic (Simplified) ---
-// 1. Group by Label
-const grouped = {};
-recipe.ingredients.forEach(item => {
-    const label = item.label || "Υλικά";
-    if (!grouped[label]) grouped[label] = [];
-    grouped[label].push(item);
-});
+// --- Ingredients Render Logic (FIXED) ---
 
-// 2. Load Crossed Off State
+// ΠΡΟΣΘΗΚΗ: Ορισμός του crossedKey και crossedSet που έλειπαν
 const crossedKey = `crossed-${id}`;
 let crossedSet = new Set(JSON.parse(localStorage.getItem(crossedKey)) || []);
 
-// 3. Render
-const container = document.getElementById('ingListContainer');
+const hasAnyFor = recipe.ingredients.some(item => item.for);
+const grouped = {};
 
-for (const [label, items] of Object.entries(grouped)) {
+recipe.ingredients.forEach(item => {
+    let groupName = !hasAnyFor ? "none" : (item.for || "Για το Φαγητό:");
+    if (!grouped[groupName]) grouped[groupName] = [];
+    grouped[groupName].push(item);
+});
+
+const container = document.getElementById('ingListContainer');
+container.innerHTML = "";
+
+for (const [groupName, items] of Object.entries(grouped)) {
     const groupDiv = document.createElement('div');
     groupDiv.className = 'ing-group';
-    
-    if (label !== "Υλικά") {
+
+    if (groupName !== "none") {
         const h3 = document.createElement('h3');
-        h3.textContent = label;
+        h3.textContent = groupName;
         groupDiv.appendChild(h3);
     }
-    
+
     const ul = document.createElement('ul');
     ul.className = 'ing-list';
-    
+
     items.forEach((item, index) => {
-        // Find ingredient name in DB, or fallback to ID
-        const dbIng = ingDB.find(i => i.id === item.id) || { name: item.id, plural: null };
         const li = document.createElement('li');
-        
-        // Construct Text: Amount + Unit (String) + Name
-        let text = "";
-        
-        if (item.amount) text += item.amount + " ";
-        if (item.unit) text += item.unit + " ";
-        
-        // Plural Check for Ingredient Name
-        // (If amount > 1 and a plural form exists, use it)
-        if (item.amount > 1 && dbIng.plural) {
-            text += dbIng.plural;
-        } else {
-            text += dbIng.name;
-        }
-        
-        li.textContent = text;
-        
-        // Unique ID for this specific line item for crossing off
-        const itemKey = `${label}-${index}`;
-        
+        li.textContent = item.text;
+
+        const itemKey = `${groupName}-${index}`;
         if (crossedSet.has(itemKey)) li.classList.add('crossed');
-        
+
         li.addEventListener('click', () => {
             li.classList.toggle('crossed');
             if (li.classList.contains('crossed')) {
@@ -127,28 +108,25 @@ for (const [label, items] of Object.entries(grouped)) {
             }
             localStorage.setItem(crossedKey, JSON.stringify([...crossedSet]));
         });
-        
+
         ul.appendChild(li);
     });
-    
+
     groupDiv.appendChild(ul);
     container.appendChild(groupDiv);
 }
 
 // --- Steps Render Logic ---
 const stepsList = document.getElementById('stepsList');
-
 recipe.steps.forEach(step => {
     const li = document.createElement('li');
     li.className = 'step-item';
-    
     const div = document.createElement('div');
-    
     const p = document.createElement('p');
     p.className = 'step-text';
     p.textContent = step.text;
     div.appendChild(p);
-    
+
     if (step.pic) {
         const img = document.createElement('img');
         img.src = step.pic;
@@ -156,7 +134,6 @@ recipe.steps.forEach(step => {
         img.onclick = () => openOverlay(step.pic);
         div.appendChild(img);
     }
-    
     li.appendChild(div);
     stepsList.appendChild(li);
 });
@@ -170,14 +147,12 @@ function openOverlay(src) {
     overlay.style.display = 'flex';
 }
 
-// Also enable for main image
-document.getElementById('recipeImg').onclick = function() {
-    if (this.src) openOverlay(this.src);
-};
+const mainImg = document.getElementById('recipeImg');
+if (mainImg) {
+    mainImg.onclick = function () { if (this.src) openOverlay(this.src); };
+}
 
-overlay.onclick = () => {
-    overlay.style.display = 'none';
-};
+overlay.onclick = () => { overlay.style.display = 'none'; };
 document.addEventListener('keydown', (e) => {
     if (e.key === "Escape") overlay.style.display = 'none';
 });
